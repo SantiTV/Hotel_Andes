@@ -2,4 +2,4 @@
 
 Miembros: 
 
-Nombre: Juan Ortega Código: 202113442
+Nombre: Juan Ortega, Código: 202113442
