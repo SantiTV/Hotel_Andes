@@ -1,5 +1,9 @@
 package com.example.demo.repositorio;
 
-public class ReservaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.demo.modelo.Reserva;
+
+public interface ReservaRepository extends JpaRepository<Reserva, Integer>{
     
 }
