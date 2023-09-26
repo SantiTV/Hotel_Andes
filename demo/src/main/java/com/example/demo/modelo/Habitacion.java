@@ -17,16 +17,20 @@ public class Habitacion {
     private int capacidad;
     private int dotacion;
     private int costo;
+    private int cuenta;
 
-    public Habitacion() {
-        // Constructor por defecto
-    }
 
-    public Habitacion(String tipo, int capacidad, int dotacion, int costo) {
+
+    public Habitacion() 
+    {;}
+
+    public Habitacion(String tipo, int capacidad, int dotacion, int costo, int cuenta) {
         this.tipo = tipo;
         this.capacidad = capacidad;
         this.dotacion = dotacion;
         this.costo = costo;
+        this.cuenta = cuenta;
+        
     }
 
 
@@ -69,4 +73,13 @@ public class Habitacion {
     public void setCosto(int costo) {
         this.costo = costo;
     }
+
+    public int getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(int cuenta) {
+        this.cuenta = cuenta;
+    }
+
 }
