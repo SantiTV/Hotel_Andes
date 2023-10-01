@@ -22,7 +22,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer>{
     // Actualizar un producto por su ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE productos SET nombre = :nombre, costo = :costo WHERE id_productos = :id", nativeQuery = true)
+    @Query(value = "UPDATE Productos SET nombre = :nombre, costo = :costo WHERE id_productos = :id", nativeQuery = true)
     void actualizarProducto(@Param("id") Long id, @Param("nombre") String nombre, @Param("costo") Long costo);
 
     // Borrar un producto por su ID
