@@ -3,13 +3,11 @@ package com.example.demo.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
-
-import jakarta.persistence.Entity;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-
-@Entity
+@Embeddable
 public class ConsumoPK implements Serializable {
 
     @ManyToOne
