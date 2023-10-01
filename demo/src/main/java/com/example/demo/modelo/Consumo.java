@@ -1,53 +1,38 @@
 package com.example.demo.modelo;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "Consumos")
+@Table(name = "Consumo")
 public class Consumo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    
 
-    private String registro;
-    private Date fecha;
+    @EmbeddedId
+    private ConsumoPK pk;
 
     public Consumo() {
         // Constructor por defecto
     }
 
-    public Consumo(String registro, Date fecha) {
-        this.registro = registro;
-        this.fecha = fecha;
+    public Consumo(PlanDeConsumo PlanDeConsumo_id_plan, Producto Productos_id_productos, String registro, Date fecha) {
+       super();
+       this.pk = new ConsumoPK(PlanDeConsumo_id_plan, Productos_id_productos, registro, fecha);
+
     }
 
-    public Integer getId() {
-        return id;
+    public ConsumoPK getPk() {
+        return pk;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPk(ConsumoPK pk) {
+        this.pk = pk;
     }
 
-    public String getRegistro() {
-        return registro;
-    }
+    
 
-    public void setRegistro(String registro) {
-        this.registro = registro;
-    }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 }
 

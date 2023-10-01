@@ -11,16 +11,19 @@ import jakarta.persistence.Table;
 public class Cliente {
     @Id
     @GeneratedValue(strategy =GenerationType.AUTO )
-    private Integer id;
+    private Integer id_clientes;
 
     private String nombre;
+    private Integer reservas;
+    private Integer comsumos;
+    private String tipoDePlan;
 
 
 
     public Cliente()
     {;}
 
-    public Cliente(String nombre)
+    public Cliente(String nombre, Integer reservas, Integer comsumos, String tipoDePlan)
     {
         this.nombre = nombre;
     
@@ -28,15 +31,15 @@ public class Cliente {
 
 
     public Integer getId() {
-        return id;
+        return id_clientes;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer id_clientes) {
+        this.id_clientes = id_clientes;
     }
 
 
@@ -44,6 +47,30 @@ public class Cliente {
         this.nombre = nombre;
     }
 
+
+        public Integer getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(Integer reservas) {
+        this.reservas = reservas;
+    }
+
+    public Integer getComsumos() {
+        return comsumos;
+    }
+
+    public void setComsumos(Integer comsumos) {
+        this.comsumos = comsumos;
+    }
+
+    public String getTipoDePlan() {
+        return tipoDePlan;
+    }
+
+    public void setTipoDePlan(String tipoDePlan) {
+        this.tipoDePlan = tipoDePlan;
+    }
 
 
 
