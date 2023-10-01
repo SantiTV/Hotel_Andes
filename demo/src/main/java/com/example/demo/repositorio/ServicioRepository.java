@@ -19,10 +19,6 @@ public interface ServicioRepository extends JpaRepository<Servicio, Integer>{
     @Query(value = "INSERT INTO Servicio (nombre, descripción, costoAdicional, horario, disponibilidad, Hotel_id_hotel) VALUES (:nombre, :descripcion, :costoAdicional, :horario, :disponibilidad, :hotelId)", nativeQuery = true)
     void crearServicio(@Param("nombre") String nombre, @Param("descripcion") String descripcion, @Param("costoAdicional") Long costoAdicional, @Param("horario") Long horario, @Param("disponibilidad") Long disponibilidad, @Param("hotelId") Long hotelId);
 
-    // Leer un servicio por su ID
-    @Query(value = "SELECT * FROM Servicio WHERE id_servicio = :id", nativeQuery = true)
-    Servicio consultarServicioPorId(@Param("id") Long id);
-
     // Actualizar un servicio por su ID
     @Modifying
     @Transactional

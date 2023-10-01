@@ -18,11 +18,7 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer>{
      @Transactional
      @Query(value = "INSERT INTO Hotel (nombre, cadenaHotelera, direccion, categorIa) VALUES (:nombre, :cadenaHotelera, :direccion, :categorIa)", nativeQuery = true)
      void crearHotel(@Param("nombre") String nombre, @Param("cadenaHotelera") String cadenaHotelera, @Param("direccion") String direccion, @Param("categorIa") String categorIa);
- 
-     // Leer un hotel por su ID
-     @Query(value = "SELECT * FROM Hotel WHERE id_hotel = :id", nativeQuery = true)
-     Hotel consultarHotelPorId(@Param("id") Long id);
- 
+
      // Actualizar un hotel por su ID
      @Modifying
      @Transactional

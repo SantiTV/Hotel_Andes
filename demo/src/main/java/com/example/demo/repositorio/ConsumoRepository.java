@@ -20,10 +20,6 @@ public interface ConsumoRepository extends JpaRepository<Consumo,  Integer>{
     @Query(value = "INSERT INTO Consumo (PlanDeConsumo_id_plan, Productos_id_productos, registro, fecha) VALUES (:planId, :productoId, :registro, :fecha)", nativeQuery = true)
     void crearConsumo(@Param("planId") Long planId, @Param("productoId") Long productoId, @Param("registro") String registro, @Param("fecha") Date fecha);
 
-    // Leer un consumo por su ID
-    @Query(value = "SELECT * FROM Consumo WHERE id_consumo = :id", nativeQuery = true)
-    Consumo consultarConsumoPorId(@Param("id") Long id);
-
     // Actualizar un consumo por su ID
     @Modifying
     @Transactional

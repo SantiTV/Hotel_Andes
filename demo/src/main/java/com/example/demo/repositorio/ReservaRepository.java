@@ -19,10 +19,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer>{
     @Query(value = "INSERT INTO Reserva (fechaEntrada, fechaSalida, numPersonas, Habitacion_id_habitacion, PlanDeConsumo_id_plan, Clientes_id_clientes, Id_hotel) VALUES (:fechaEntrada, :fechaSalida, :numPersonas, :habitacionId, :planDeConsumoId, :clientesId, :hotelId)", nativeQuery = true)
     void crearReserva(@Param("fechaEntrada") String fechaEntrada, @Param("fechaSalida") String fechaSalida, @Param("numPersonas") Long numPersonas, @Param("habitacionId") Long habitacionId, @Param("planDeConsumoId") Long planDeConsumoId, @Param("clientesId") Long clientesId, @Param("hotelId") Long hotelId);
 
-    // Leer una reserva por su ID
-    @Query(value = "SELECT * FROM Reserva WHERE Id_Reserva = :id", nativeQuery = true)
-    Reserva consultarReservaPorId(@Param("id") Long id);
-
     // Actualizar una reserva por su ID
     @Modifying
     @Transactional

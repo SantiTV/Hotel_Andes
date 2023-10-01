@@ -19,10 +19,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario,  Integer> {
     @Query(value = "INSERT INTO Usuarios (tipo, hotel_id_hotel) VALUES (:tipo, :hotelId)", nativeQuery = true)
     void crearUsuario(@Param("tipo") String tipo, @Param("hotelId") Long hotelId);
 
-    // Leer un usuario por su ID
-    @Query(value = "SELECT * FROM Usuarios WHERE id_usuario = :id", nativeQuery = true)
-    Usuario consultarUsuarioPorId(@Param("id") Long id);
-
     // Actualizar un usuario por su ID
     @Modifying
     @Transactional

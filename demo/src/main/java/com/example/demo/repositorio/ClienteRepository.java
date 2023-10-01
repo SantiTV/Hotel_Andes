@@ -20,10 +20,6 @@ public interface ClienteRepository extends JpaRepository<Cliente,  Integer> {
     @Query(value = "INSERT INTO Clientes (nombre, reservas, consumos, tipoDePlan) VALUES (:nombre, :reservas, :consumos, :tipoDePlan)", nativeQuery = true)
     void crearCliente(@Param("nombre") String nombre, @Param("reservas") Long reservas, @Param("consumos") Long consumes, @Param("tipoDePlan") String tipoDePlan);
 
-    // Leer un cliente por su ID
-    @Query(value = "SELECT * FROM Clientes WHERE id_clientes = :id", nativeQuery = true)
-    Cliente consultarClientePorId(@Param("id") Long id);
-
     // Actualizar un cliente por su ID
     @Modifying
     @Transactional
