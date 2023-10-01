@@ -16,8 +16,8 @@ public interface ClienteRepository extends JpaRepository<Cliente,  Integer> {
     // Crear un nuevo cliente
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO Clientes (nombre, reservas, consumes, tipoDePlan) VALUES (:nombre, :reservas, :consumes, :tipoDePlan)", nativeQuery = true)
-    void crearCliente(@Param("nombre") String nombre, @Param("reservas") Long reservas, @Param("consumes") Long consumes, @Param("tipoDePlan") String tipoDePlan);
+    @Query(value = "INSERT INTO Clientes (nombre, reservas, consumos, tipoDePlan) VALUES (:nombre, :reservas, :consumes, :tipoDePlan)", nativeQuery = true)
+    void crearCliente(@Param("nombre") String nombre, @Param("reservas") Long reservas, @Param("consumos") Long consumes, @Param("tipoDePlan") String tipoDePlan);
 
     // Leer un cliente por su ID
     @Query(value = "SELECT * FROM Clientes WHERE id_clientes = :id", nativeQuery = true)
@@ -26,8 +26,8 @@ public interface ClienteRepository extends JpaRepository<Cliente,  Integer> {
     // Actualizar un cliente por su ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Clientes SET nombre = :nombre, reservas = :reservas, consumes = :consumes, tipoDePlan = :tipoDePlan WHERE id_clientes = :id", nativeQuery = true)
-    void actualizarCliente(@Param("id") Long id, @Param("nombre") String nombre, @Param("reservas") Long reservas, @Param("consumes") Long consumes, @Param("tipoDePlan") String tipoDePlan);
+    @Query(value = "UPDATE Clientes SET nombre = :nombre, reservas = :reservas, consumes = :consumos, tipoDePlan = :tipoDePlan WHERE id_clientes = :id", nativeQuery = true)
+    void actualizarCliente(@Param("id") Long id, @Param("nombre") String nombre, @Param("reservas") Long reservas, @Param("consumos") Long consumes, @Param("tipoDePlan") String tipoDePlan);
 
     // Borrar un cliente por su ID
     @Modifying
