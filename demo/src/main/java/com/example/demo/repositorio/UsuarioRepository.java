@@ -31,6 +31,10 @@ void actualizarUsuario(@Param("id") Long id, @Param("tipoDocumento") String tipo
 @Query(value = "DELETE FROM Usuarios WHERE id_usuario = :id", nativeQuery = true)
 void borrarUsuario(@Param("id") Long id);
 
+// Consultar usuarios por tipo
+@Query(value = "SELECT * FROM Usuarios WHERE tipo = :tipo", nativeQuery = true)
+Collection<Usuario> consultarUsuariosPorTipo(@Param("tipo") String tipo);
+
 // Consultar todos los usuarios
 @Query(value = "SELECT * FROM Usuarios", nativeQuery = true)
 Collection<Usuario> darUsuarios();
