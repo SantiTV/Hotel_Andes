@@ -1,6 +1,7 @@
 package com.example.demo.repositorio;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -42,4 +43,19 @@ public interface ClienteRepository extends JpaRepository<Cliente,  Integer> {
     // Consultar un cliente por su ID
     @Query(value = "SELECT * FROM Clientes WHERE id_clientes = :id", nativeQuery = true)
     Cliente darCliente(@Param("id") long id);
+
+    // Consultar la llegada de un cliente al hotel
+     @Query(value = "SELECT c.* " +
+     "FROM Clientes c " +
+     "JOIN Reserva r ON c.id_clientes = r.Clientes_id_clientes " +
+     "WHERE r.fechaEntrada = :fechaEntrada", nativeQuery = true)
+      List<Cliente> consultarLlegadaClienteAlHotel(@Param("fechaEntrada") String fechaEntrada);
+    
+    // Consultar la salida de un cliente al hotel 
+    @Query(value = "SELECT c.* " +
+    "FROM Clientes c " +
+    "JOIN Reserva r ON c.id_clientes = r.Clientes_id_clientes " +
+    "WHERE r.fechaSalida = :fechaSalida", nativeQuery = true)
+     List<Cliente> consultarSalidaClienteAlHotel(@Param("fechaSalida") String fechaSalida);
+
 }
