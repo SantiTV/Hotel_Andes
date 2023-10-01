@@ -54,4 +54,6 @@ public interface ClienteRepository extends JpaRepository<Cliente,  Integer> {
     "WHERE r.fechaSalida = :fechaSalida", nativeQuery = true)
      List<Cliente> consultarSalidaClienteAlHotel(@Param("fechaSalida") String fechaSalida);
 
+     
+
 }
