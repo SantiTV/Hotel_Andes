@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 public class PlanDeConsumo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer id_plan;
 
     private String nombre;
     private String descripcion;
@@ -30,11 +30,11 @@ public class PlanDeConsumo {
     }
 
     public Integer getId() {
-        return id;
+        return id_plan;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.id_plan = id;
     }
 
     public String getNombre() {
