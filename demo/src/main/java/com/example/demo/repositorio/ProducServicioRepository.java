@@ -1,6 +1,7 @@
 package com.example.demo.repositorio;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.modelo.ProducServicio;
+import com.example.demo.modelo.ProducServicioPK;
 
 import jakarta.transaction.Transactional;
 
@@ -38,5 +40,7 @@ Collection<ProducServicio> darProducServicios();
 // Consultar un ProducServicio por su ID
 @Query(value = "SELECT * FROM ProductosDeServicios WHERE id = :id", nativeQuery = true)
 ProducServicio darProducServicio(@Param("id") Long id);
+
+Optional<ProducServicio> findById(ProducServicioPK pk);
 }
 

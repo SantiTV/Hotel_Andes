@@ -3,6 +3,7 @@ package com.example.demo.repositorio;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.modelo.Consumo;
+import com.example.demo.modelo.ConsumoPK;
 
 import jakarta.transaction.Transactional;
 
@@ -48,4 +50,6 @@ public interface ConsumoRepository extends JpaRepository<Consumo,  Integer>{
     "JOIN Consumo co ON pc.id_plan = co.PlanDeConsumo_id_plan " +
     "WHERE c.nombre = :nombreCliente AND co.registro = :registroConsumo", nativeQuery = true)
     List<Consumo> consultarConsumoPorCliente(@Param("nombreCliente") String nombreCliente, @Param("registroConsumo") String registroConsumo);
+
+    Optional<Consumo> findById(ConsumoPK pk);
 }
