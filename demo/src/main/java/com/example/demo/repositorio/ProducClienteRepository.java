@@ -13,25 +13,30 @@ import jakarta.transaction.Transactional;
 
 public interface ProducClienteRepository extends JpaRepository<ProducCliente, Integer> {
     
- // Crear un nuevo registro ProductosDeClientes
- @Modifying
- @Transactional
- @Query(value = "INSERT INTO ProductosDeClientes (Clientes_id_clientes, Productos_id_productos) VALUES (:clientesId, :productosId)", nativeQuery = true)
- void crearRegistroProductosDeClientes(@Param("clientesId") Long clientesId, @Param("productosId") Long productosId);
+// Crear un nuevo ProducCliente
+@Modifying
+@Transactional
+@Query(value = "INSERT INTO ProductosDeClientes (Clientes_id_clientes, Productos_id_productos) VALUES (:clientesId, :productosId)", nativeQuery = true)
+void crearProducCliente(@Param("clientesId") Long clientesId, @Param("productosId") Long productosId);
 
- // Borrar un registro ProductosDeClientes por IDs de Clientes y Productos
- @Modifying
- @Transactional
- @Query(value = "DELETE FROM ProductosDeClientes WHERE Clientes_id_clientes = :clientesId AND Productos_id_productos = :productosId", nativeQuery = true)
- void borrarRegistroProductosDeClientes(@Param("clientesId") Long clientesId, @Param("productosId") Long productosId);
+// Actualizar un ProducCliente por su ID
+@Modifying
+@Transactional
+@Query(value = "UPDATE ProductosDeClientes SET Clientes_id_clientes = :clientesId, Productos_id_productos = :productosId WHERE id = :id", nativeQuery = true)
+void actualizarProducCliente(@Param("id") Long id, @Param("clientesId") Long clientesId, @Param("productosId") Long productosId);
 
- // Consultar todos los registros ProductosDeClientes
- @Query(value = "SELECT * FROM ProductosDeClientes", nativeQuery = true)
- Collection<ProducCliente> darRegistrosProductosDeClientes();
+// Borrar un ProducCliente por su ID
+@Modifying
+@Transactional
+@Query(value = "DELETE FROM ProductosDeClientes WHERE id = :id", nativeQuery = true)
+void borrarProducCliente(@Param("id") Long id);
 
- // Consultar un registro ProductosDeClientes por IDs de Clientes y Productos
- @Query(value = "SELECT * FROM ProductosDeClientes WHERE Clientes_id_clientes = :clientesId AND Productos_id_productos = :productosId", nativeQuery = true)
- ProducCliente darRegistroProductosDeClientes(@Param("clientesId") Long clientesId, @Param("productosId") Long productosId);
+// Consultar todos los ProducClientes
+@Query(value = "SELECT * FROM ProductosDeClientes", nativeQuery = true)
+Collection<ProducCliente> darProducClientes();
+
+// Consultar un ProducCliente por su ID
+@Query(value = "SELECT * FROM ProductosDeClientes WHERE id = :id", nativeQuery = true)
+ProducCliente darProducCliente(@Param("id") Long id);
 }
-
 

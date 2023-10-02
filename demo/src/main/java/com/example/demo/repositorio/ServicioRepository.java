@@ -1,6 +1,7 @@
 package com.example.demo.repositorio;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -38,4 +39,12 @@ public interface ServicioRepository extends JpaRepository<Servicio, Integer>{
     // Consultar un servicio por su ID
     @Query(value = "SELECT * FROM Servicio WHERE id_servicio = :id", nativeQuery = true)
     Servicio darServicio(@Param("id") long id);
+
+    // Consultar la reserva de un servicio por parte de un cliente
+    @Query(value = "SELECT DISTINCT s.* " +
+    "FROM Clientes c " +
+    "JOIN PlanDeConsumo pc ON c.id_clientes = pc.Clientes_id_clientes " +
+    "JOIN Servicio s ON pc.Servicio_id_servicio = s.id_servicio " +
+    "WHERE c.nombre = :nombreCliente AND s.nombre = :nombreServicio", nativeQuery = true)
+    List<Servicio> consultarReservaDeServicioPorCliente(@Param("nombreCliente") String nombreCliente, @Param("nombreServicio") String nombreServicio);
 }

@@ -38,4 +38,5 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer>{
     // Consultar una reserva por su ID
     @Query(value = "SELECT * FROM Reserva WHERE Id_Reserva = :id", nativeQuery = true)
     Reserva darReserva(@Param("id") long id);
+
 }

@@ -2,6 +2,7 @@ package com.example.demo.repositorio;
 
 import java.sql.Date;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -39,4 +40,12 @@ public interface ConsumoRepository extends JpaRepository<Consumo,  Integer>{
     // Consultar un consumo por su ID
     @Query(value = "SELECT * FROM Consumo WHERE id_consumo = :id", nativeQuery = true)
     Consumo darConsumo(@Param("id") long id);
+
+    // Consultar un consumo por parte del cliente
+    @Query(value = "SELECT co.* " +
+    "FROM Clientes c " +
+    "JOIN PlanDeConsumo pc ON c.id_clientes = pc.Clientes_id_clientes " +
+    "JOIN Consumo co ON pc.id_plan = co.PlanDeConsumo_id_plan " +
+    "WHERE c.nombre = :nombreCliente AND co.registro = :registroConsumo", nativeQuery = true)
+    List<Consumo> consultarConsumoPorCliente(@Param("nombreCliente") String nombreCliente, @Param("registroConsumo") String registroConsumo);
 }
