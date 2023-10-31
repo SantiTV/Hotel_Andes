@@ -13,12 +13,10 @@ public class Consumo {
     @EmbeddedId
     private ConsumoPK pk;
 
-    public Consumo() {
-        // Constructor por defecto
-    }
+    public Consumo() 
+    {;}
 
     public Consumo(PlanDeConsumo PlanDeConsumo_id_plan, Producto Productos_id_productos, String registro, Date fecha) {
-       super();
        this.pk = new ConsumoPK(PlanDeConsumo_id_plan, Productos_id_productos, registro, fecha);
 
     }
