@@ -56,7 +56,7 @@ public class ProducClienteController {
     }
 
     // Consultar todos los ProducClientes
-    @GetMapping("/")
+    @GetMapping("/producclientes/todos/")
     public Collection<ProducCliente> darProducClientes() {
         return producClienteRepository.findAll();
     }
@@ -71,4 +71,5 @@ public class ProducClienteController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }

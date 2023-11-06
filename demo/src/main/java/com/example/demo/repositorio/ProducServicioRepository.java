@@ -14,6 +14,9 @@ import com.example.demo.modelo.ProducServicioPK;
 import jakarta.transaction.Transactional;
 
 public interface ProducServicioRepository extends JpaRepository<ProducServicio, Integer> {
+
+@Query(value = "SELECT * FROM ProductosDeServicios WHERE Servicio_id_servicio = :pk.serviciosId AND Productos_id_productos = :pk.productoId AND registro = :pk.registro AND fecha = :pk.fecha", nativeQuery = true)
+Optional<ProducServicio> findById(@Param("pk") ProducServicioPK pk);
     
 // Crear un nuevo ProducServicio
 @Modifying
@@ -40,7 +43,5 @@ Collection<ProducServicio> darProducServicios();
 // Consultar un ProducServicio por su ID
 @Query(value = "SELECT * FROM ProductosDeServicios WHERE id = :id", nativeQuery = true)
 ProducServicio darProducServicio(@Param("id") Long id);
-
-Optional<ProducServicio> findById(ProducServicioPK pk);
 }
 

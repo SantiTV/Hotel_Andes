@@ -56,7 +56,7 @@ public class ProducServicioController {
     }
 
     // Consultar todos los ProducServicios
-    @GetMapping("/")
+    @GetMapping("/producclientes/todos/")
     public Collection<ProducServicio> darProducServicios() {
         return producServicioRepository.findAll();
     }
