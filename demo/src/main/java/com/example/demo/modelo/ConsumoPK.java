@@ -31,7 +31,7 @@ public class ConsumoPK implements Serializable {
     public ConsumoPK ( PlanDeConsumo planDeConsumo_id_plan, Producto productos_id_productos, String registro, Date fecha){
         super();
         this.planDeConsumo_id_plan = planDeConsumo_id_plan;
-        this.planDeConsumo_id_plan = planDeConsumo_id_plan;
+        this.productos_id_productos = productos_id_productos; 
         this.registro = registro;
         this.fecha = fecha;
     }

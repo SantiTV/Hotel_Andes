@@ -12,10 +12,12 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.demo.modelo.Consumo;
 import com.example.demo.modelo.ConsumoPK;
-
 import jakarta.transaction.Transactional;
 
 public interface ConsumoRepository extends JpaRepository<Consumo,  Integer>{
+
+    @Query(value = "SELECT * FROM Consumo WHERE PlanDeConsumo_id_plan = :pk.planId AND Productos_id_productos = :pk.productoId AND registro = :pk.registro AND fecha = :pk.fecha", nativeQuery = true)
+    Optional<Consumo> findById(@Param("pk") ConsumoPK pk);
 
     // Crear un nuevo consumo
     @Modifying
@@ -50,6 +52,4 @@ public interface ConsumoRepository extends JpaRepository<Consumo,  Integer>{
     "JOIN Consumo co ON pc.id_plan = co.PlanDeConsumo_id_plan " +
     "WHERE c.nombre = :nombreCliente AND co.registro = :registroConsumo", nativeQuery = true)
     List<Consumo> consultarConsumoPorCliente(@Param("nombreCliente") String nombreCliente, @Param("registroConsumo") String registroConsumo);
-
-    Optional<Consumo> findById(ConsumoPK pk);
 }
