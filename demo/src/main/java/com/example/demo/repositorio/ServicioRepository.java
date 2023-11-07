@@ -47,4 +47,39 @@ public interface ServicioRepository extends JpaRepository<Servicio, Integer>{
     "JOIN Servicio s ON pc.Servicio_id_servicio = s.id_servicio " +
     "WHERE c.nombre = :nombreCliente AND s.nombre = :nombreServicio", nativeQuery = true)
     List<Servicio> consultarReservaDeServicioPorCliente(@Param("nombreCliente") String nombreCliente, @Param("nombreServicio") String nombreServicio);
+
+    // MOSTRAR LOS 20 SERVICIOS MÁS POPULARES.
+    @Query(value = "SELECT s.nombre AS nombre_servicio, COUNT(s.id_servicio) AS veces_consumido " +
+            "FROM servicio s " +
+            "JOIN PlanDeConsumo p ON s.id_servicio = p.Servicio_id_servicio " +
+            "JOIN reserva r ON p.id_plan = r.PlanDeConsumo_id_plan " +
+            "WHERE r.fecha_de_entrada >= :fechaInicio " +
+            "AND r.fecha_de_salida <= :fechaFin " +
+            "GROUP BY s.nombre " +
+            "ORDER BY veces_consumido DESC " +
+            "LIMIT 20", nativeQuery = true)
+    List<Servicio> consultarServiciosPopularesEnPeriodo(
+            @Param("fechaInicio") String fechaInicio,
+            @Param("fechaFin") String fechaFin
+    );
+
+     // Consultar los servicios con poca demanda (menos de 3 veces semanales al año) durante el último año de operación
+    @Query(value = "SELECT s.nombre AS nombre_servicio, COUNT(s.id_servicio) as frecuencia" +
+            "FROM servicio s " +
+            "JOIN PlanDeConsumo p ON s.id_servicio = p.Servicio_id_servicio " +
+            "JOIN reserva r ON p.id_Reserva= r.id_Reserva " +
+            "WHERE r.fechaEntrada >= DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
+            "GROUP BY s.id_servicio " +
+            "HAVING frecuencia < 3 * 52", nativeQuery = true)
+    List<Servicio> consultarServiciosConPocaDemandaUltimoAnio();
+
+    // Mostrar los servicios que cumplen con ciertas características
+    @Query(value = "SELECT * " +
+            "FROM servicio s " +
+            "JOIN planDeConsumo pc ON s.id_servicio = pc.Servicio_id_servicio " +
+            "JOIN reserva r ON pc.id_Reserva = r.id_Reserva " +
+            "WHERE s.costoAdicional BETWEEN :costoMin AND :costoMax " +
+            "AND s.disponibilidad BETWEEN :fechaInicio AND :fechaFin " +
+            "AND s.tipoServicio = :tipoServicio", nativeQuery = true)
+    List<Servicio> mostrarServiciosConCaracteristicas(@Param("costoMin") double costoMin, @Param("costoMax") double costoMax, @Param("fechaInicio") String fechaInicio, @Param("fechaFin") String fechaFin, @Param("tipoServicio") String tipoServicio);
 }

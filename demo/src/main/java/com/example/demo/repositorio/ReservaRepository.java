@@ -1,6 +1,7 @@
 package com.example.demo.repositorio;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -38,5 +39,39 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer>{
     // Consultar una reserva por su ID
     @Query(value = "SELECT * FROM Reserva WHERE Id_Reserva = :id", nativeQuery = true)
     Reserva darReserva(@Param("id") long id);
+    
 
+    // Consultar las fechas de los días de mayor ocupación para todo el tiempo de operación
+    @Query(value = "SELECT r.fechaEntrada " +
+            "FROM reserva r " +
+            "GROUP BY r.fechaEntrada " +
+            "ORDER BY COUNT(*) DESC LIMIT 1", nativeQuery = true)
+    List<String> consultarFechasMayorOcupacionTotal();
+
+    // Consultar las fechas de mayores ingresos para todo el tiempo de operación
+    @Query(value = "SELECT r.fechaEntrada " +
+            "FROM reserva r " +
+            "JOIN habitacion h ON r.id_Reserva = h.id_Reserva " +
+            "JOIN planDeConsumo pc ON r.id_Reserva = pc.id_Reserva " +
+            "JOIN servicio s ON pc.Servicio_id_servicio = s.id_servicio " +
+            "GROUP BY r.fechaEntrada " +
+            "ORDER BY (SUM(h.costo) + SUM(s.costoAdicional)) DESC LIMIT 1", nativeQuery = true)
+    List<String> consultarFechasMayoresIngresosTotal();
+
+    // Consultar las fechas de menor demanda (menor ocupación) para todo el tiempo de operación
+    @Query(value = "SELECT r.fechaEntrada " +
+            "FROM reserva r " +
+            "GROUP BY r.fechaEntrada " +
+            "ORDER BY COUNT(*) ASC LIMIT 1", nativeQuery = true)
+    List<String> consultarFechasMenorDemandaTotal();
+
+    // Mostrar el consumo en HotelAndes por un usuario dado en un rango de fechas indicado
+    @Query(value = "SELECT r.fechaEntrada, h.costo as costo_habitacion, s.costoAdicional as costo_servicio " +
+            "FROM reserva r " +
+            "JOIN habitacion h ON r.id_Reserva = h.id_Reserva " +
+            "JOIN planDeConsumo pc ON r.id_Reserva = pc.id_Reserva " +
+            "JOIN servicio s ON pc.Servicio_id_servicio = s.id_servicio " +
+            "WHERE r.Clientes_id_clientes = :id_cliente " +
+            "AND r.fechaEntrada BETWEEN :fechaInicio AND :fechaFin", nativeQuery = true)
+    List<Object[]> mostrarConsumoPorUsuarioEnRangoDeFechas(@Param("id_cliente") long id_cliente, @Param("fechaInicio") String fechaInicio, @Param("fechaFin") String fechaFin);
 }

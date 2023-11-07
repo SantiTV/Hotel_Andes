@@ -1,6 +1,7 @@
 package com.example.demo.repositorio;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -41,4 +42,23 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
     // Consultar una habitación por su ID
     @Query(value = "SELECT * FROM Habitacion WHERE id_habitacion = :id", nativeQuery = true)
     Habitacion darHabitacion(@Param("id") long id);
+
+    // Mostrar el índice de ocupación de cada una de las habitaciones del hotel en el último año
+    @Query(value = "SELECT h.id_habitacion, " +
+            "(COUNT(r.id_Reserva) / (365 * (SELECT COUNT(*) FROM habitacion))) * 100 AS indice_ocupacion " +
+            "FROM habitacion h " +
+            "LEFT JOIN reserva r ON h.id_habitacion = r.Habitacion_id_habitacion " +
+            "WHERE r.fechaEntrada >= DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
+            "GROUP BY h.id_habitacion", nativeQuery = true)
+    List<Object[]> mostrarIndiceOcupacionUltimoAnio();
+
+    // Mostrar el dinero recolectado por servicios en cada habitación en el último año corrido
+    @Query(value = "SELECT h.id_habitacion, SUM(s.costoAdicional) as dinero_recolectado " +
+            "FROM habitacion h " +
+            "LEFT JOIN reserva r ON h.id_habitacion = r.Habitacion_id_habitacion" +
+            "LEFT JOIN planDeConsumo pc ON r.id_Reserva = pc.id_Reserva " +
+            "LEFT JOIN servicio s ON pc.Servicio_id_servicio = s.id_servicio " +
+            "WHERE r.fechaEntrada >= DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
+            "GROUP BY h.id_habitacion", nativeQuery = true)
+    List<Object[]> mostrarDineroRecolectadoPorServiciosUltimoAnio();
 }

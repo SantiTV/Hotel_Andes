@@ -54,6 +54,21 @@ public interface ClienteRepository extends JpaRepository<Cliente,  Integer> {
     "WHERE r.fechaSalida = :fechaSalida", nativeQuery = true)
      List<Cliente> consultarSalidaClienteAlHotel(@Param("fechaSalida") String fechaSalida);
 
-     
+
+    // Consultar los buenos clientes según los criterios especificados
+    @Query(value = "SELECT c.nombre AS nombre_cliente, " +
+            "CASE " +
+            "WHEN IFNULL(SUM(DATEDIFF(r.fechaSalida, r.fechaEntrada)), 0) >= 14 OR " +
+            "SUM(r.costoAdicional + h.costo) > 15000000 " +
+            "THEN 'Buen cliente' " +
+            "ELSE 'Cliente regular' " +
+            "END AS tipo_cliente " +
+            "FROM Clientes c " +
+            "JOIN Reserva r ON c.id_clientes = r.Clientes_id_clientes " +
+            "JOIN Habitacion h ON r.id_Reserva = h.id_Reserva " +
+            "WHERE r.fechaEntrada >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR) " +
+            "GROUP BY c.id_clientes", nativeQuery = true)
+    List<Cliente> consultarBuenosClientesUltimoAnio();
+
 
 }
