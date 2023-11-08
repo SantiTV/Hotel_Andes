@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,5 +86,23 @@ public class ClienteController {
     @GetMapping("/clientes/buenos")
     public List<Cliente> consultarBuenosClientesUltimoAnio() {
         return clienteRepository.consultarBuenosClientesUltimoAnio();
+    }
+
+    //Consultar consumo en HotelAndes
+    @GetMapping("/consultas/clientes-por-servicio-horario")
+    public List<Cliente> consultarClientesPorServicioHorario(@RequestParam Long idServicio, @RequestParam Date horarioInicio, @RequestParam Date horarioFinal) {
+        return clienteRepository.consultarClientesPorServicioHorario(idServicio, horarioInicio, horarioFinal);
+    }
+
+    //Consultar consumo en HotelAndes V2
+    @GetMapping("/consultas/clientes-sin-servicio-en-periodo")
+    public List<Cliente> consultarClientesSinServicioEnPeriodo(@RequestParam Long idServicio, @RequestParam Date fechaInicial, @RequestParam Date fechaFinal) {
+        return clienteRepository.consultarClientesSinServicioEnPeriodo(idServicio, fechaInicial, fechaFinal);
+    }
+
+    //Consultar los clientes excelentes
+    @GetMapping("/consultas/clientes-excelentes")
+    public List<Cliente> obtenerDetallesClientesConConsumoAdicional() {
+        return clienteRepository.obtenerDetallesClientesConConsumoAdicional();
     }
 }

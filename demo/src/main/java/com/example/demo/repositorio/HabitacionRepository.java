@@ -61,4 +61,22 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
             "WHERE r.fechaEntrada >= DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
             "GROUP BY h.id_habitacion", nativeQuery = true)
     List<Habitacion> mostrarDineroRecolectadoPorServiciosUltimoAnio();
+
+    // Habitación más solicitada
+    @Query(value = "SELECT h.nombre, COUNT(*) as solicitudes " +
+        "FROM habitacion h " +
+        "JOIN reserva r ON h.id_habitacion = r.id_habitacion " +
+        "GROUP BY h.nombre " +
+        "ORDER BY solicitudes DESC " +
+        "FETCH FIRST 1 ROW ONLY", nativeQuery = true)
+    List<Habitacion> habitacionMasSolicitada();
+
+    // Habitación menos solicitada
+   @Query(value = "SELECT h.nombre, COUNT(*) as solicitudes " +
+        "FROM habitacion h " +
+        "JOIN reserva r ON h.id_habitacion = r.id_habitacion " +
+        "GROUP BY h.nombre " +
+        "ORDER BY solicitudes ASC " +
+        "FETCH FIRST 1 ROW ONLY", nativeQuery = true)
+   List<Habitacion> habitacionMenosSolicitada();
 }

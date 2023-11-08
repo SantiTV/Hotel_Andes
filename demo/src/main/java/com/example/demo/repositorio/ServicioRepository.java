@@ -82,4 +82,28 @@ public interface ServicioRepository extends JpaRepository<Servicio, Integer>{
             "AND s.disponibilidad BETWEEN :fechaInicio AND :fechaFin " +
             "AND s.tipoServicio = :tipoServicio", nativeQuery = true)
     List<Servicio> mostrarServiciosConCaracteristicas(@Param("costoMin") double costoMin, @Param("costoMax") double costoMax, @Param("fechaInicio") String fechaInicio, @Param("fechaFin") String fechaFin, @Param("tipoServicio") String tipoServicio);
+
+   // Servicio más consumido
+   @Query(value = "SELECT s.nombre, COUNT(*) as consumoTotal " +
+        "FROM servicio s " +
+        "JOIN plandeconsumo pc ON s.id_servicio = pc.planServicio " +
+        "JOIN productos p ON pc.id_plan = p.id_productos " +
+        "GROUP BY s.nombre " +
+        "ORDER BY consumoTotal DESC " +
+        "FETCH FIRST 1 ROW ONLY", nativeQuery = true)
+   List<Servicio> servicioMasConsumido();
+
+
+   // Servicio menos consumido
+  @Query(value = "SELECT s.nombre, COUNT(*) as consumoTotal " +
+        "FROM servicio s " +
+        "JOIN plandeconsumo pc ON s.id_servicio = pc.planServicio " +
+        "JOIN productos p ON pc.id_plan = p.id_productos " +
+        "GROUP BY s.nombre " +
+        "ORDER BY consumoTotal ASC " +
+        "FETCH FIRST 1 ROW ONLY", nativeQuery = true)
+   List<Servicio> servicioMenosConsumido();
+
+
+   
 }

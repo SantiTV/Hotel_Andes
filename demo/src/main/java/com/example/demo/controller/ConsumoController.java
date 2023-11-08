@@ -64,7 +64,8 @@ public class ConsumoController {
     public Collection<Consumo> darConsumos() {
         return consumoRepository.findAll();
     }
-
+    
+    // Consultar consumo
     @GetMapping("/")
     public ResponseEntity<Consumo> darConsumo(@RequestBody ConsumoPK pk) {
         Optional<Consumo> consumoOptional = consumoRepository.findById(pk);

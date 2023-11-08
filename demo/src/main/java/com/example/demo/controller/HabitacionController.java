@@ -80,4 +80,15 @@ public class HabitacionController {
     public List<Habitacion> mostrarDineroRecolectadoPorServiciosUltimoAnio() {
         return habitacionRepository.mostrarDineroRecolectadoPorServiciosUltimoAnio();
     }
+    // Habitación más solicitada
+    @GetMapping("/consultas/habitacion-mas-solicitada")
+    public List<Habitacion> habitacionMasSolicitada() {
+        return habitacionRepository.habitacionMasSolicitada();
+    }
+
+    // Habitación menos solicitada
+    @GetMapping("/consultas/habitacion-menos-solicitada")
+    public List<Habitacion> habitacionMenosSolicitada() {
+        return habitacionRepository.habitacionMenosSolicitada();
+    }
 }

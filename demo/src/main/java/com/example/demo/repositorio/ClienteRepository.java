@@ -1,6 +1,7 @@
 package com.example.demo.repositorio;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -70,5 +71,45 @@ public interface ClienteRepository extends JpaRepository<Cliente,  Integer> {
             "GROUP BY c.id_clientes", nativeQuery = true)
     List<Cliente> consultarBuenosClientesUltimoAnio();
 
+    //Consultar consumo en HotelAndes
+    @Query(value = "SELECT clientes.id_clientes, clientes.nombre, servicio.nombre AS servicio_nombre " +
+        "FROM clientes " +
+        "JOIN productoCliente ON clientes.id_clientes = productoCliente.id_clientes " +
+        "JOIN productos ON productoCliente.id_productos = productos.id_productos " +
+        "JOIN productoServicio ON productos.id_productos = productoServicio.id_productos " +
+        "JOIN servicio ON productoServicio.id_servicio = servicio.id_servicio " +
+        "WHERE servicio.id_servicio = ID_SERVICIO AND servicio.horario BETWEEN HORARIO_INICIO AND HORARIO_FINAL", nativeQuery = true)
+    List<Cliente> consultarClientesPorServicioHorario(@Param("ID_SERVICIO") Long idServicio, @Param("HORARIO_INICIO") Date horarioInicio, @Param("HORARIO_FINAL") Date horarioFinal);
+    
+    //Consultar consumo en HotelAndes V2
+    @Query(value = "SELECT c.id_clientes, c.nombre " +
+        "FROM clientes c " +
+        "LEFT JOIN ( " +
+        "SELECT hc.id_clientes, hs.id_servicio " +
+        "FROM habitacion_cliente hc " +
+        "JOIN habitacion h ON hc.id_habitacion = h.id_habitacion " +
+        "JOIN servicio hs ON h.servicioHotel = hs.id_servicio " +
+        "WHERE hs.id_servicio = 'ID_SERVICIO' AND hc.fecha >= 'FECHA_INICIAL' AND hc.fecha <= 'FECHA_FINAL') t " +
+        "ON c.id_clientes = t.id_clientes " +
+        "WHERE t.id_clientes IS NULL", nativeQuery = true)
+    List<Cliente> consultarClientesSinServicioEnPeriodo(@Param("ID_SERVICIO") Long idServicio, @Param("FECHA_INICIAL") Date fechaInicial, @Param("FECHA_FINAL") Date fechaFinal);
 
+    //Consultar los clientes excelentes 
+    @Query(value = "SELECT clientes.id_clientes, clientes.nombre, clientes.apellido, clientes.telefono, clientes.email, hotelAndes.id_hotel, hotelAndes.nombre AS nombreHotel, servicio.id_servicio, servicio.nombre AS nombreServicio, servicio.descripcion, servicio.costoadicional, servicio.horario, servicio.disponibilidad, consumo.id_plandeconsumo, consumo.id_productos, productos.nombre AS nombreProducto, productos.costo " +
+        "FROM clientes " +
+        "INNER JOIN hotelAndes ON clientes.habHotel = hotelAndes.id_hotel " +
+        "INNER JOIN servicio ON clientes.id_clientes = servicio.cliente " +
+        "INNER JOIN consumo ON clientes.id_clientes = consumo.id_clientes " +
+        "INNER JOIN productos ON consumo.id_productos = productos.id_productos " +
+        "WHERE clientes.id_clientes IN ( " +
+        "  SELECT clientes.id_clientes " +
+        "  FROM clientes " +
+        "  INNER JOIN reserva ON clientes.id_clientes = reserva.cliente " +
+        "  WHERE DATEDIFF(MONTH, reserva.check_in, GETDATE()) < 3 AND ( clientes.id_clientes IN ( " +
+        "    SELECT clientes.id_clientes " +
+        "    FROM clientes " +
+        "    INNER JOIN consumo ON clientes.id_clientes = consumo.id_clientes " +
+        "    INNER JOIN servicio ON consumo.id_servicio = servicio.id_servicio " +
+        "    WHERE servicio.costoadicional > 30)))", nativeQuery = true)
+    List<Cliente> obtenerDetallesClientesConConsumoAdicional();
 }

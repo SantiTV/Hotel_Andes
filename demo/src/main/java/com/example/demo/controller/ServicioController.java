@@ -87,4 +87,16 @@ public class ServicioController {
     public List<Servicio> mostrarServiciosConCaracteristicas(@RequestParam double costoMin, @RequestParam double costoMax, @RequestParam String fechaInicio, @RequestParam String fechaFin, @RequestParam String tipoServicio) {
         return servicioRepository.mostrarServiciosConCaracteristicas(costoMin, costoMax, fechaInicio, fechaFin, tipoServicio);
     }
+
+    // Servicio más consumido
+    @GetMapping("/consultas/servicio-mas-consumido")
+    public List<Servicio> servicioMasConsumido() {
+        return servicioRepository.servicioMasConsumido();
+    }
+
+    // Servicio menos consumido
+    @GetMapping("/consultas/servicio-menos-consumido")
+    public List<Servicio> servicioMenosConsumido() {
+        return servicioRepository.servicioMenosConsumido();
+    }
 }
