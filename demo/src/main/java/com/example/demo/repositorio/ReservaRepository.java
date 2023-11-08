@@ -46,7 +46,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer>{
             "FROM reserva r " +
             "GROUP BY r.fechaEntrada " +
             "ORDER BY COUNT(*) DESC LIMIT 1", nativeQuery = true)
-    List<String> consultarFechasMayorOcupacionTotal();
+    List<Reserva> consultarFechasMayorOcupacionTotal();
 
     // Consultar las fechas de mayores ingresos para todo el tiempo de operación
     @Query(value = "SELECT r.fechaEntrada " +
@@ -56,14 +56,14 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer>{
             "JOIN servicio s ON pc.Servicio_id_servicio = s.id_servicio " +
             "GROUP BY r.fechaEntrada " +
             "ORDER BY (SUM(h.costo) + SUM(s.costoAdicional)) DESC LIMIT 1", nativeQuery = true)
-    List<String> consultarFechasMayoresIngresosTotal();
+    List<Reserva> consultarFechasMayoresIngresosTotal();
 
     // Consultar las fechas de menor demanda (menor ocupación) para todo el tiempo de operación
     @Query(value = "SELECT r.fechaEntrada " +
             "FROM reserva r " +
             "GROUP BY r.fechaEntrada " +
             "ORDER BY COUNT(*) ASC LIMIT 1", nativeQuery = true)
-    List<String> consultarFechasMenorDemandaTotal();
+    List<Reserva> consultarFechasMenorDemandaTotal();
 
     // Mostrar el consumo en HotelAndes por un usuario dado en un rango de fechas indicado
     @Query(value = "SELECT r.fechaEntrada, h.costo as costo_habitacion, s.costoAdicional as costo_servicio " +
@@ -73,5 +73,5 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer>{
             "JOIN servicio s ON pc.Servicio_id_servicio = s.id_servicio " +
             "WHERE r.Clientes_id_clientes = :id_cliente " +
             "AND r.fechaEntrada BETWEEN :fechaInicio AND :fechaFin", nativeQuery = true)
-    List<Object[]> mostrarConsumoPorUsuarioEnRangoDeFechas(@Param("id_cliente") long id_cliente, @Param("fechaInicio") String fechaInicio, @Param("fechaFin") String fechaFin);
+    List<Reserva> mostrarConsumoPorUsuarioEnRangoDeFechas(@Param("id_cliente") long id_cliente, @Param("fechaInicio") String fechaInicio, @Param("fechaFin") String fechaFin);
 }

@@ -69,4 +69,22 @@ public class ServicioController {
         List<Servicio> serviciosReservados = servicioRepository.consultarReservaDeServicioPorCliente(nombreCliente, nombreServicio);
         return serviciosReservados;
     }
+
+    // MOSTRAR LOS 20 SERVICIOS MÁS POPULARES.
+    @GetMapping("/servicios/populares")
+    public List<Servicio> consultarServiciosPopularesEnPeriodo(@RequestParam String fechaInicio, @RequestParam String fechaFin) {
+        return servicioRepository.consultarServiciosPopularesEnPeriodo(fechaInicio, fechaFin);
+    }
+
+    // Consultar los servicios con poca demanda (menos de 3 veces semanales al año) durante el último año de operación
+    @GetMapping("/servicios/poca-demanda-ultimo-ano")
+    public List<Servicio> consultarServiciosConPocaDemandaUltimoAnio() {
+        return servicioRepository.consultarServiciosConPocaDemandaUltimoAnio();
+    }
+
+    // Mostrar los servicios que cumplen con ciertas características
+    @GetMapping("/servicios/con-caracteristicas")
+    public List<Servicio> mostrarServiciosConCaracteristicas(@RequestParam double costoMin, @RequestParam double costoMax, @RequestParam String fechaInicio, @RequestParam String fechaFin, @RequestParam String tipoServicio) {
+        return servicioRepository.mostrarServiciosConCaracteristicas(costoMin, costoMax, fechaInicio, fechaFin, tipoServicio);
+    }
 }

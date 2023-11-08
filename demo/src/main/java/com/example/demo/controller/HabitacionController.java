@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -66,5 +67,17 @@ public class HabitacionController {
     @GetMapping("/consultarPorTipo") // Consultar habitaciones por tipo
     public Collection<Habitacion> consultarPorTipo(@RequestParam("tipo") String tipo) {
         return habitacionRepository.consultarPorTipo(tipo);
+    }
+
+    // Mostrar el índice de ocupación de cada una de las habitaciones del hotel en el último año
+    @GetMapping("/habitaciones/ocupacion")
+    public List<Habitacion> mostrarIndiceOcupacionUltimoAnio() {
+        return habitacionRepository.mostrarIndiceOcupacionUltimoAnio();
+    }
+    
+    // Mostrar el dinero recolectado por servicios en cada habitación en el último año corrido
+    @GetMapping("/habitaciones/dinero-recolectado")
+    public List<Habitacion> mostrarDineroRecolectadoPorServiciosUltimoAnio() {
+        return habitacionRepository.mostrarDineroRecolectadoPorServiciosUltimoAnio();
     }
 }

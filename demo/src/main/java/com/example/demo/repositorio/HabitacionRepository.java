@@ -50,7 +50,7 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
             "LEFT JOIN reserva r ON h.id_habitacion = r.Habitacion_id_habitacion " +
             "WHERE r.fechaEntrada >= DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
             "GROUP BY h.id_habitacion", nativeQuery = true)
-    List<Object[]> mostrarIndiceOcupacionUltimoAnio();
+    List<Habitacion> mostrarIndiceOcupacionUltimoAnio();
 
     // Mostrar el dinero recolectado por servicios en cada habitación en el último año corrido
     @Query(value = "SELECT h.id_habitacion, SUM(s.costoAdicional) as dinero_recolectado " +
@@ -60,5 +60,5 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
             "LEFT JOIN servicio s ON pc.Servicio_id_servicio = s.id_servicio " +
             "WHERE r.fechaEntrada >= DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
             "GROUP BY h.id_habitacion", nativeQuery = true)
-    List<Object[]> mostrarDineroRecolectadoPorServiciosUltimoAnio();
+    List<Habitacion> mostrarDineroRecolectadoPorServiciosUltimoAnio();
 }

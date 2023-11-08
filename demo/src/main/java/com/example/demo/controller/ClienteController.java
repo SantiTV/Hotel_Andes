@@ -80,4 +80,10 @@ public class ClienteController {
     public List<Cliente> consultarSalidaClienteAlHotel(@RequestParam("fechaSalida") String fechaSalida) {
         return clienteRepository.consultarSalidaClienteAlHotel(fechaSalida);
     }
+
+    // Consultar los buenos clientes según los criterios especificados
+    @GetMapping("/clientes/buenos")
+    public List<Cliente> consultarBuenosClientesUltimoAnio() {
+        return clienteRepository.consultarBuenosClientesUltimoAnio();
+    }
 }
