@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Andes</title>
@@ -48,7 +49,7 @@
 </form>
 
 <!-- Mostrar resultados de la consulta -->
-<div th:if="${result != null}">
+<div th:if="${result != null}"  class="result-container">
     <h2>Resultados de la consulta:</h2>
     <ul th:each="item : ${result}">
         <li th:text="${item.nombre}"></li>
