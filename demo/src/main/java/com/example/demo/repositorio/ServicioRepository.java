@@ -17,13 +17,13 @@ public interface ServicioRepository extends JpaRepository<Servicio, Integer>{
     // Crear un nuevo servicio
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO Servicio (nombre, descripción, costoAdicional, horario, disponibilidad, Hotel_id_hotel) VALUES (:nombre, :descripcion, :costoAdicional, :horario, :disponibilidad, :hotelId)", nativeQuery = true)
+    @Query(value = "INSERT INTO Servicio (nombre, descripcion, costoAdicional, horario, disponibilidad, Hotel_id_hotel) VALUES (:nombre, :descripcion, :costoAdicional, :horario, :disponibilidad, :hotelId)", nativeQuery = true)
     void crearServicio(@Param("nombre") String nombre, @Param("descripcion") String descripcion, @Param("costoAdicional") Long costoAdicional, @Param("horario") Long horario, @Param("disponibilidad") Long disponibilidad, @Param("hotelId") Long hotelId);
 
     // Actualizar un servicio por su ID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Servicio SET nombre = :nombre, descripción = :descripcion, costoAdicional = :costoAdicional, horario = :horario, disponibilidad = :disponibilidad, Hotel_id_hotel = :hotelId WHERE id_servicio = :id", nativeQuery = true)
+    @Query(value = "UPDATE Servicio SET nombre = :nombre, descripcion = :descripcion, costoAdicional = :costoAdicional, horario = :horario, disponibilidad = :disponibilidad, Hotel_id_hotel = :hotelId WHERE id_servicio = :id", nativeQuery = true)
     void actualizarServicio(@Param("id") Long id, @Param("nombre") String nombre, @Param("descripcion") String descripcion, @Param("costoAdicional") Long costoAdicional, @Param("horario") Long horario, @Param("disponibilidad") Long disponibilidad, @Param("hotelId") Long hotelId);
 
     // Borrar un servicio por su ID
