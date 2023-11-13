@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Andes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Hotel Andes</h1>
+
+    <!-- Botones para cada requerimiento -->
+    <form action="#" th:action="@{/}" method="post">
+        <button type="submit" name="button" value="opcion1">Consultar Buenos Clientes Último Año</button>
+        <button type="submit" name="button" value="opcion2">Consultar Consumo en HotelAndes</button>
+        <button type="submit" name="button" value="opcion3">Consultar Consumo en HotelAndes V2</button>
+        <button type="submit" name="button" value="opcion4">Consultar Clientes Excelentes</button>
+        <button type="submit" name="button" value="opcion5">Mostrar Índice de Ocupación Último Año</button>
+        <button type="submit" name="button" value="opcion6">Mostrar Dinero Recolectado por Servicios Último Año</button>
+        <button type="submit" name="button" value="opcion7">Habitación Más Solicitada</button>
+        <button type="submit" name="button" value="opcion8">Habitación Menos Solicitada</button>
+        <button type="submit" name="button" value="opcion9">Consultar Fechas de Mayor Ocupación Total</button>
+        <button type="submit" name="button" value="opcion10">Consultar Fechas de Mayores Ingresos Total</button>
+        <button type="submit" name="button" value="opcion11">Consultar Fechas de Menor Demanda Total</button>
+        <button type="submit" name="button" value="opcion12">Mostrar Consumo Por Usuario en Rango de Fechas</button>
+        <button type="submit" name="button" value="opcion13">Mostrar los 20 Servicios Más Populares</button>
+        <button type="submit" name="button" value="opcion14">Consultar Servicios con Poca Demanda Último Año</button>
+        <button type="submit" name="button" value="opcion15">Mostrar Servicios con Características</button>
+        <button type="submit" name="button" value="opcion16">Mostrar Servicio Más Consumido</button>
+        <button type="submit" name="button" value="opcion17">Mostrar Servicio Menos Consumido</button>
+</form>
+
+<!-- Mostrar resultados de la consulta -->
+<div th:if="${result != null}">
+    <h2>Resultados de la consulta:</h2>
+    <ul th:each="item : ${result}">
+        <li th:text="${item.nombre}"></li>
+        <!-- Agregar más campos según la consulta -->
+    </ul>
+</div>
+
+</body>
+</html>
