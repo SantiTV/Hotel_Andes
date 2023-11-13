@@ -1,53 +1,64 @@
 package com.example.demo;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class CargarDatosPrueba {
 
     public static void main(String[] args) {
-        String url = "jdbc:oracle:thin:@localhost:1521:nombre_de_servicio"; 
-        String usuario = "usuario";
-        String contraseña = "contraseña";
+        String url = "jdbc:oracle:thin:@fn4.oracle.virtual.uniandes.edu.co:1521/PROD"; // Replace with your own details
+        String usuario = "";
+        String contraseña = "";
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        try (Connection connection = DriverManager.getConnection(url, usuario, contraseña)) {
+            connection.setAutoCommit(false);
 
-        try {
-            // Establecer la conexión a la base de datos
-            connection = DriverManager.getConnection(url, usuario, contraseña);
+            // Specify the path to your SQL file
+            String filePath = "src\\main\\resources\\Data\\Clientes.sql";
 
-            // Realizar inserciones de datos de prueba en la tabla clientes
-            String insertQuery = "INSERT INTO clientes (id_clientes, nombre, reservas, consumos, tipodeplan) VALUES (?, ?, ?, ?, ?)";
-            preparedStatement = connection.prepareStatement(insertQuery);
+            // Execute SQL statements from the file
+            ejecutarSQLDesdeArchivo(connection, filePath);
 
-            // Generar datos de prueba y realizar inserciones
-            for (int i = 1; i <= 10; i++) {
-                preparedStatement.setInt(1, i);
-                preparedStatement.setString(2, "Cliente " + i);
-                preparedStatement.setInt(3, i * 2); // Número de reservas ficticio
-                preparedStatement.setDouble(4, i * 100.0); // Consumos ficticios
-                preparedStatement.setString(5, "Plan " + i);
-
-                preparedStatement.executeUpdate();
-            }
-
-            System.out.println("Datos de prueba insertados en la tabla clientes.");
-
-        } catch (SQLException e) {
+            connection.commit();
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
-        } finally {
-            // Cerrar recursos
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
+            System.out.println("Rolling back the transaction.");
+        }
+    }
+
+    // Method to execute SQL statements from a file
+    private static void ejecutarSQLDesdeArchivo(Connection connection, String filePath) throws SQLException, IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath));
+             Statement statement = connection.createStatement()) {
+
+            StringBuilder sqlStatement = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                // Skip comments and empty lines
+                if (!line.trim().startsWith("--") && !line.trim().isEmpty()) {
+                    sqlStatement.append(line.trim());
+
+                    // If the line ends with a semicolon, it's the end of the SQL statement
+                    if (line.trim().endsWith(";")) {
+                        String sql = sqlStatement.toString();
+                        try {
+                            // Execute the SQL statement
+                            statement.executeUpdate(sql);
+                            System.out.println("Executed SQL statement: " + sql);
+                        } catch (SQLException ex) {
+                            System.err.println("Error executing SQL statement: " + sql);
+                            ex.printStackTrace();
+                        }
+
+                        // Clear the StringBuilder for the next statement
+                        sqlStatement.setLength(0);
+                    }
                 }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
     }
