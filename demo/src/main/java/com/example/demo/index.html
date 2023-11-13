@@ -1,26 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Andes</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+          body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
 
-        h1 {
-            color: #333;
-        }
+h1 {
+    color: #333;
+}
 
-        button {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+form {
+    margin-top: 20px;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.result-container {
+    margin-top: 20px;
+}
+
+.result-container h2 {
+    color: #333;
+}
+
+.result-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.result-container li {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
     </style>
 </head>
 <body>
@@ -49,7 +84,7 @@
 </form>
 
 <!-- Mostrar resultados de la consulta -->
-<div th:if="${result != null}"  class="result-container">
+<div th:if="${result != null}"  >
     <h2>Resultados de la consulta:</h2>
     <ul th:each="item : ${result}">
         <li th:text="${item.nombre}"></li>
